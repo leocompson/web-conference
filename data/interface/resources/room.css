@@ -166,6 +166,7 @@
 .container .room[layout='h'] .member:nth-child(1) video {right: 50%}
 
 .container .room[layout='b'] .member:nth-child(1) video {
+  margin-top: -1px;
   margin-left: -50vh;
 }
 
