@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: arial,sans-serif;
+}
+
+.container {
+  width: 100%;
+  height: auto;
+  display: grid;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+.options, .controls, .toolbar {
+  z-index: 11;
+  position: absolute;
+  background-color: transparent;
+}
+
+.toolbar {
+  top: 1px; 
+  right: 1px;
+}
+
+.controls {
+  top: 43px;
+  left: 1px;
+  display: none;
+}
+
+.options  {
+  top: 1px; 
+  left: 1px; 
+  z-index: 12;
+  transition: all 700ms ease-in-out;
+}
+
+.options[state="show"] {
+  transform: translate(257px, 0);
+}
+
+.options table, .controls table, .toolbar table {
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.options table tr td, .controls table tr td, .toolbar table tr td {
+  padding: 0;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  transition: 300ms ease all;
+  background-color: transparent;
+}
+
+.options table tr td:hover, .controls table tr td:hover, .toolbar table tr td:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.options table tr td svg, .controls table tr td svg, .toolbar table tr td svg {
+  fill: #777;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.options[dark] table tr td svg, .controls[dark] table tr td svg, .toolbar[dark] table tr td svg {
+  fill: #e4e4e4;
+}
+
+.controls #socket svg {display: none}
+.controls #socket[state='closed'] .closed {fill: #6f6f6f}
+.controls #socket[state='ready'] .ready {display: inline}
+.controls #socket[state='closed'] .closed {display: inline}
+.controls #socket[state='loading'] .loading {display: inline}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 13;
+  height: 22px;
+  padding: 0 5px;
+  position: fixed;
+  font-size: 12px;
+  line-height: 22px;
+  pointer-events: none;
+  font-family: monospace;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  border-top: solid 1px rgba(255,255,255,0.05);
+}
+
+@-moz-document url-prefix() {
+  .footer,
+  .container .chat .list .item .time,
+  .container .settings table tr td input,
+  .container .settings table tr td textarea {
+    font-size: 11px !important;
+    font-family: monaco, "andale mono", "lucida console", "courier new", monospace !important;
+  }
+  .container .room .member .close {
+    font-size: 24px !important;
+    line-height: 68px !important;
+    font-family: monaco, "andale mono", "lucida console", "courier new", monospace !important;
+  }
+}
+
+html[context="webapp"] .toolbar {
+  display: none;
+}

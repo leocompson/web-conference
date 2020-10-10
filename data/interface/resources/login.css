@@ -1,0 +1,82 @@
+.login {
+  border: 0;
+  padding: 0;
+  width: 100vw;
+  margin: auto;
+  height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  margin: auto;
+  max-width: 380px;
+  padding: 28px 48px;
+  position: relative;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.form form {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+.form form input {
+  border: 0;
+  outline: 0;
+  color: #555;
+  width: 100%;
+  padding: 12px;
+  font-size: 12px;
+  margin: 0 0 10px;
+  background: #ececec;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+.form form button {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  color: #fff;
+  padding: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  background: #4776da;
+  text-transform: uppercase;
+  transition: 300ms ease all;
+  font-family: "Roboto", sans-serif;
+}
+
+.form form button:hover, .form form button:active, .form form button:focus {
+  background: #3d69c5;
+}
+
+.form .logo {
+  width: 100%;
+  height: 64px;
+  margin: auto;
+  margin-bottom: 28px;
+  background: url('../../icons/128.png') no-repeat center center;
+  background-size: 64px;
+}
+
+.form .message {
+  color: #b3b3b3;
+  font-size: 12px;
+  margin: 12px 0 0;
+  user-select: none;
+}
+
+@media (max-width: 480px) {
+  .form {
+    max-width: unset;
+    padding: 28px 16px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  }
+}

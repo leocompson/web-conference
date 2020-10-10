@@ -1,0 +1,219 @@
+.container .chat {
+  border: 0;
+  z-index: 11;
+  width: 300px;
+  height: 100vh;
+  display: none;
+  background-color: #fff;
+}
+
+.container .chat .header {
+  padding: 0;
+  height: 44px;
+  line-height: 44px;
+  position: relative;
+  border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+
+.container .chat .header[dark] {
+  background-color: #444;
+}
+
+.container .chat .header span {
+  top: 0;
+  padding: 0;
+  width: 42px;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+  transition: 300ms ease all;
+}
+
+.container .chat .header span:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.container .chat .header #pin,
+.container .chat .header #unpin {
+  right: 0;
+  display: none;
+}
+
+.container .chat .header #toggle {
+  left: 0;
+}
+
+.container .chat .header span svg {
+  fill: #777;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.container .chat .header[dark] span svg {
+  fill: #e4e4e4;
+}
+
+.container[mode='overlay'] {
+  grid-template-columns: 100%;
+}
+
+.container[mode='overlay'] .chat {
+  top: 1px;
+  right: -300px;
+  position: fixed;
+}
+
+.container[mode='overlay'][target="room"] .chat {
+  transition: all 700ms ease-in-out;
+}
+
+.container[mode='overlay'][target="chat"] .chat {
+  transition: none;
+}
+
+.container[mode='overlay'] .chat .header #unpin {
+  display: inline-block;
+}
+
+.container[mode='overlay'][state='hide'] .chat {
+  transform: translate(0, 0);
+}
+
+.container[mode='overlay'][state='show'] .chat {
+  transform: translate(-300px, 0);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.container[mode='inline'] .chat .header #pin {display: inline-block}
+.container[mode='inline'][state='hide'] {grid-template-columns: 100%}
+.container[mode='inline'][state='show'] {grid-template-columns: auto 300px}
+
+.container[mode='inline'] .chat {
+  top: unset;
+  right: unset;
+  margin-top: 0;
+  position: relative;
+}
+
+.container[mode='inline'][target="chat"] .chat,
+.container[mode='inline'][target="room"] .chat {
+  transition: none;
+}
+
+.container[mode='inline'][state='show'] .chat {transform: translate(0, 0)}
+.container[mode='inline'][state='hide'] .chat {transform: translate(300px, 0)}
+
+.container .chat .list {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: calc(100vh - 88px);
+}
+
+.container .chat .list .item {
+  color: #555;
+  padding: 5px 0;
+  text-align: left;
+  margin-bottom: 1px;
+  background-color: #fff;
+  border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+
+.container .chat .list .item table {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border-spacing: 0;
+}
+
+.container .chat .list .item table tr td {
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+}
+
+.container .chat .list .item .icon {
+  padding: 10px;
+  max-width: 32px;
+  border-right: solid 1px rgba(0,0,0,0.05);
+}
+
+.container .chat .list .item .icon svg {
+  fill: #777;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.container .chat .list .item .name {
+  width: 100%;
+  padding: 5px;
+  color: #777777;
+  font-size: 12px;
+  font-family: arial,sans-serif;
+}
+
+.container .chat .list .item .time {
+  color: #a0a0a0;
+  font-size: 12px;
+  min-width: 90px;
+  padding: 5px 10px;
+  text-align: right;
+  font-family: monospace;
+}
+
+.container .chat .list .item .body {
+  width: 100%;
+  color: #555;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 5px 10px;
+  text-align: justify;
+  font-family: arial,sans-serif;
+}
+
+.container .chat .input {
+  left: 0;
+  border: 0;
+  bottom: 0;
+  width: 100%;
+  height: 42px;
+  outline: none;
+  position: absolute;
+  border-top: solid 1px rgba(0,0,0,0.1);
+}
+
+.container .chat .input input {
+  border: 0;
+  float: left;
+  height: 42px;
+  outline: none;
+  padding: 0 10px;
+  background-color: #fff;
+  width: calc(100% - 68px);
+}
+
+.container .chat .input button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 48px;
+  height: 42px;
+  float: right;
+  outline: none;
+  cursor: pointer;
+  background-color: #fff;
+  transition: 300ms ease all;
+  border-left: solid 1px rgba(0,0,0,0.05);
+}
+
+.container .chat .input button:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.container .chat .input button svg {
+  fill: #555;
+  pointer-events: none;
+  vertical-align: middle;
+}

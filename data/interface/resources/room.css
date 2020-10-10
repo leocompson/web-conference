@@ -1,0 +1,345 @@
+.container .room {
+  margin: 0;
+  width: 100%;
+  display: none;
+  background-color: #555;
+}
+
+.container .room .member {
+  width: auto;
+  margin: 1px;
+  height: auto;
+  position: relative;
+  text-align: center;
+  background-color: #444;
+}
+
+.container .room .member[grid-row-end] {grid-row-end: var(--members)}
+.container .room .member[grid-column-end] {grid-column-end: var(--members)}
+.container .room .member[grid-area-v] {grid-area: var(--members) / 1 / auto / auto}
+.container .room .member[grid-area-h] {grid-area: 1 / var(--members) / auto / auto}
+.container .room .member[float-left] {margin-left: calc(calc(100vw / var(--members)) - 100vw)}
+.container .room .member[float-right] {margin-left: calc(calc(100vw / var(--members)) - 128px)}
+.container .room[grid-template-columns-r] {grid-template-columns: repeat(auto-fill, calc(100% / (var(--members) - 0)))}
+.container .room[grid-template-columns-d] {grid-template-columns: repeat(auto-fill, calc(100% / (var(--members) - 1)))}
+
+.container .room .member .nickname {
+  top: 5px;
+  width: auto;
+  height: 20px;
+  padding: 0 5px;
+  font-size: 12px;
+  text-align: left;
+  line-height: 20px;
+  position: absolute;
+  left: calc(50% - 36px);
+  background-color: transparent;
+  font-family: arial,sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.container .room .member .close {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 64px;
+  color: transparent;
+  border-radius: 64px;
+  top: calc(50% - 32px);
+  font-family: monospace;
+  right: calc(50% - 32px);
+  transition: 300ms ease all;
+  background-color: transparent;
+}
+
+.container .room .member:hover .close {
+  color: #fff;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.container .room .member:nth-child(1) .name {
+  display: none;
+}
+
+.container .room .member video {
+  border: 0;
+  padding: 0;
+  width: auto;
+  margin: auto;
+  height: 100%;
+  outline: none;
+  max-width: 100vh;
+  object-fit: cover;
+  background-color: #222;
+  border: solid 1px #7d7d7d;
+}
+
+/* --- a --- */
+
+.container .room[layout='a'] {
+  height: 100vh;
+}
+
+.container .room[layout='a'] .member {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container .room[layout='a'] .member video {
+  width: 100%;
+  max-height: 128px;
+}
+
+.container .room[layout='a'] .member:nth-child(1) {
+  margin: 0;
+  width: auto;
+  height: auto;
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+
+.container .room[layout='a'] .member:nth-child(1) video {
+  width: 100vw;
+  max-height: calc(100vh - 132px);
+}
+
+/* --- b --- */
+
+.container .room[layout='b'],
+.container .room[layout='g'],
+.container .room[layout='h'] {
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.container .room[layout='b'] .member,
+.container .room[layout='g'] .member,
+.container .room[layout='h'] .member {
+  height: 128px;
+}
+
+.container .room[layout='b'] .member video,
+.container .room[layout='g'] .member video,
+.container .room[layout='h'] .member video {
+  width: 128px;
+  height: 128px;
+}
+
+.container .room[layout='b'] .member:nth-child(1),
+.container .room[layout='g'] .member:nth-child(1),
+.container .room[layout='h'] .member:nth-child(1) {
+  margin: 0;
+  display: flex;
+  margin-top: 1px;
+  grid-row-start: 1;
+  text-align: center;
+  align-items: center;
+  grid-column-start: 1;
+  justify-content: center; 
+}
+
+.container .room[layout='b'] .member:nth-child(1) {
+  width: auto;
+  height: calc(100vh - 129px);
+}
+
+.container .room[layout='b'] .member:nth-child(1) video,
+.container .room[layout='g'] .member:nth-child(1) video,
+.container .room[layout='h'] .member:nth-child(1) video {
+  top: auto;
+  width: auto;
+  height: 100vh;
+  position: fixed;
+}
+
+.container .room[layout='b'] .member:nth-child(1) video {
+  width: 100%;
+  max-height: calc(100vh - 132px);
+}
+
+.container .room[layout='b'] .member:nth-child(1) video {left: 50%}
+.container .room[layout='g'] .member:nth-child(1) video {left: 50%}
+.container .room[layout='h'] .member:nth-child(1) video {right: 50%}
+
+.container .room[layout='b'] .member:nth-child(1) video {
+  margin-left: -50vh;
+}
+
+.container[mode='inline'][state='show'] .room[layout='b'] .member:nth-child(1) video,
+.container[mode='inline'][state='show'] .room[layout='g'] .member:nth-child(1) video {
+  margin-left: calc(-50vh - 150px);
+}
+
+.container[mode='inline'][state='show'] .room[layout='h'] .member:nth-child(1) video {
+  margin-right: calc(-50vh - 150px);
+}
+
+.container .room[layout='b'] .member:nth-child(1) video[small] {
+  left: 0;
+  width: 100vw;
+  margin-left: 0;
+}
+
+/* --- c --- */
+
+.container .room[layout='c']::-webkit-scrollbar {
+  width: 0;
+}
+
+.container .room[layout='c'] {
+  height: 100vh;
+  overflow: auto;
+  scrollbar-width: none;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.container .room[layout='c'] .member {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container .room[layout='c'] .member video {
+  width: 100%;
+  height: auto;
+}
+
+/* --- d --- */
+
+.container .room[layout*='d']::-webkit-scrollbar {
+  width: 0;
+}
+
+.container .room[layout*='d'] {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  grid-template-rows: repeat(var(--divide), 1fr);
+  grid-template-columns: repeat(var(--repeat), 1fr);
+}
+
+.container .room[layout*='i'] {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  grid-template-rows: repeat(var(--repeat), 1fr);
+  grid-template-columns: repeat(var(--divide), 1fr);
+}
+
+.container .room[layout='d1'] .member,
+.container .room[layout='i1'] .member {
+  margin: 0;
+}
+
+.container .room[layout='i1'] .member {margin-right: 1px}
+.container .room[layout='d1'] .member {margin-bottom: 1px}
+
+.container .room[layout*='d'] .member,
+.container .room[layout*='i'] .member {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+
+.container .room[layout*='d'] .member {
+  min-height: 300px;
+  width: calc(100% - 2px);
+}
+
+.container .room[layout*='i'] .member {
+  min-width: 300px;
+  height: calc(100% - 2px);
+}
+
+.container .room[layout*='d'] .member video {width: 100%}
+.container .room[layout*='i'] .member video {height: 100%}
+
+/* --- e --- */
+
+.container .room[layout='e'] {
+  height: 100vh;
+  overflow-x: auto;
+}
+
+.container .room[layout='e'] .member,
+.container .room[layout='f'] .member {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container .room[layout='e'] .member video,
+.container .room[layout='f'] .member video {
+  width: 100vw;
+  max-width: 300px;
+}
+
+/* --- f --- */
+
+.container .room[layout='f']::-webkit-scrollbar {
+  width: 0;
+}
+
+.container .room[layout='f'] {
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+/* --- g --- */
+
+.container .room[layout='g']::-webkit-scrollbar,
+.container .room[layout='h']::-webkit-scrollbar {
+  width: 0;
+}
+
+.container .room[layout='g'], 
+.container .room[layout='h'] {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.container .room[layout='g'] .member,
+.container .room[layout='h'] .member {
+  width: 128px;
+}
+
+.container .room[layout='g'] .member:nth-child(1),
+.container .room[layout='h'] .member:nth-child(1) {
+  width: 0;
+  height: 100vh; 
+}
+
+.container .room[layout='g'] .member:nth-child(1) video,
+.container .room[layout='h'] .member:nth-child(1) video {
+  max-height: unset;
+}
+
+.container .room[layout='g'] .member:nth-child(1) video[small],
+.container .room[layout='h'] .member:nth-child(1) video[small] {
+  width: calc(100vw - 128px);
+}
+
+.container .room[layout='g'] .member:nth-child(1) video[small] {
+  left: 0;
+  margin-left: 0 !important;
+}
+
+.container .room[layout='h'] .member:nth-child(1) video[small] {
+  right: 0;
+  margin-right: 0 !important;
+}
+
+.container[mode='overlay'] .room[layout='g'] .member:nth-child(1) video {margin-left: -50vh}
+.container[mode='overlay'] .room[layout='h'] .member:nth-child(1) video {margin-right: -50vh}
+
+.container[mode='inline'][state='hide'] .room[layout='g'] .member:nth-child(1) video {margin-left: -50vh}
+.container[mode='inline'][state='hide'] .room[layout='h'] .member:nth-child(1) video {margin-right: -50vh}

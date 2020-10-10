@@ -1,0 +1,24 @@
+.container .loader {
+  top: 0;
+  left: 0;
+  z-index: 11;
+  width: 100vw;
+  margin: auto;
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.container .loader svg {
+  fill: #3367d6;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.container .loader[white] svg {
+  fill: #fff;
+}

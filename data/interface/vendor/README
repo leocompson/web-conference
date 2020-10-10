@@ -1,0 +1,6 @@
+This add-on uses the following open-source projects:
+
+sortable.js: https://github.com/SortableJS/Sortable/releases/tag/1.10.2 >> Sortable.js
+peer.js: https://github.com/chandler-stimson/meeting/releases/tag/0.1.1 >> client\data\window\meeting >> peer.js
+safe.js: https://github.com/chandler-stimson/meeting/releases/tag/0.1.1 >> client\data\window\meeting >> safe.js
+meeting.js: https://github.com/chandler-stimson/meeting/releases/tag/0.1.1 >> client\data\window\meeting >> meeting.js

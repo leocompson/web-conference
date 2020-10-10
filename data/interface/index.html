@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Web Meeting</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- -->
+		<link rel="stylesheet" type="text/css" href="index.css">
+		<link rel="stylesheet" type="text/css" href="resources/chat.css">
+		<link rel="stylesheet" type="text/css" href="resources/room.css">
+		<link rel="stylesheet" type="text/css" href="resources/login.css">
+		<link rel="stylesheet" type="text/css" href="resources/loader.css">
+		<link rel="stylesheet" type="text/css" href="resources/settings.css">
+	</head>
+	<body>
+		<template for="chat-item">
+			<div class="item">
+				<table>
+					<tr>
+						<td class="icon">
+							<svg width="10" height="10" viewBox="0 0 32 32">
+								<path d="M10 8 A6 6 0 0 1 22 8 L22 12 A6 6 0 0 1 10 12 z M2 26 C3 23 10 20 14 20 L18 20 C22 20 29 23 30 26 L30 28 L2 28 z"/>
+							</svg>
+						</td>
+						<td class="name"></td>
+						<td class="time"></td>
+					</tr>
+					<tr>
+						<td colspan='3' class="body"></td>
+					</tr>
+				</table>		
+			</div>
+		</template>
+		<!-- -->
+		<div class="options">
+			<table>
+				<tr>
+					<td id="options" title="Options">
+						<svg width="12" height="12" viewBox="0 0 20 20">
+							<g transform="translate(-464.000000, -380.000000)">
+								<g transform="translate(464.000000, 380.000000)">
+									<path d="M17.4,11 C17.4,10.7 17.5,10.4 17.5,10 C17.5,9.6 17.5,9.3 17.4,9 L19.5,7.3 C19.7,7.1 19.7,6.9 19.6,6.7 L17.6,3.2 C17.5,3.1 17.3,3 17,3.1 L14.5,4.1 C14,3.7 13.4,3.4 12.8,3.1 L12.4,0.5 C12.5,0.2 12.2,0 12,0 L8,0 C7.8,0 7.5,0.2 7.5,0.4 L7.1,3.1 C6.5,3.3 6,3.7 5.4,4.1 L3,3.1 C2.7,3 2.5,3.1 2.3,3.3 L0.3,6.8 C0.2,6.9 0.3,7.2 0.5,7.4 L2.6,9 C2.6,9.3 2.5,9.6 2.5,10 C2.5,10.4 2.5,10.7 2.6,11 L0.5,12.7 C0.3,12.9 0.3,13.1 0.4,13.3 L2.4,16.8 C2.5,16.9 2.7,17 3,16.9 L5.5,15.9 C6,16.3 6.6,16.6 7.2,16.9 L7.6,19.5 C7.6,19.7 7.8,19.9 8.1,19.9 L12.1,19.9 C12.3,19.9 12.6,19.7 12.6,19.5 L13,16.9 C13.6,16.6 14.2,16.3 14.7,15.9 L17.2,16.9 C17.4,17 17.7,16.9 17.8,16.7 L19.8,13.2 C19.9,13 19.9,12.7 19.7,12.6 L17.4,11 L17.4,11 Z M10,13.5 C8.1,13.5 6.5,11.9 6.5,10 C6.5,8.1 8.1,6.5 10,6.5 C11.9,6.5 13.5,8.1 13.5,10 C13.5,11.9 11.9,13.5 10,13.5 L10,13.5 Z"/>
+								</g>
+							</g>
+						</svg>					
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="controls">
+			<table>
+				<tr>
+					<td id="chat" title="Show | Hide Chat">
+						<svg width="10" height="10" viewBox="0 0 32 32">
+							<path d="M 3.1259382e-6,16 A 16,12 0 0 1 32.000003,16 16,12 0 0 1 16.000003,28 H 14.000003 C 12.000003,30 8.0000031,32 4.0000031,32 5.0000031,31 6.0000031,28 6.0000031,25.375 V 25.375 A 16,12 0 0 1 3.1259382e-6,16"/>
+						</svg>		
+					</td>
+				</tr>
+				<tr>
+					<td id="layout" title="Swap layout">
+						<svg width="16" height="16" viewBox="0 0 48 48">
+							<path d="M 26.408091,43.314376 38.408761,31.313707 44.409096,37.314039 44.409094,20.51311 H 27.608162 L 33.608495,26.513442 21.607826,38.514108 Z"/>
+							<path d="M 26.569266,9.551338 14.568597,21.552005 20.568934,27.552338 3.768,27.552343 3.7680012,10.751411 9.7683304,16.751736 21.768995,4.7510725 Z"/>
+						</svg>						
+					</td>
+				</tr>
+				<tr>
+					<td id="socket" title="Toggle socket connection (ON | OFF)" state="loading">
+						<svg width="16" height="16" viewBox="0 0 32 32" class="ready">
+							<path d="M23,8H9c-4.4,0-8,3.6-8,8s3.6,8,8,8h14c4.4,0,8-3.6,8-8S27.4,8,23,8z M9,21c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5 S11.8,21,9,21z"/>
+						</svg>
+						<svg width="16" height="16" viewBox="0 0 32 32" class="closed">
+							<path d="M 9,8 H 23 C 27.4,8 31,11.6 31,16 31,20.4 27.4,24 23,24 H 9 C 4.6,24 1,20.4 1,16 1,11.6 4.6,8 9,8 Z M 23,21 C 25.8,21 28,18.8 28,16 28,13.2 25.8,11 23,11 20.2,11 18,13.2 18,16 18,18.8 20.2,21 23,21 Z"/>
+						</svg>
+						<svg width="16" viewBox="0 0 120 30" class="loading">
+							<circle cx="15" cy="15" r="15">
+								<animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/>
+								<animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite"/>
+							</circle>
+							<circle cx="60" cy="15" r="9" fill-opacity="0.3">
+								<animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite"/>
+								<animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite"/>
+							</circle>
+							<circle cx="105" cy="15" r="15">
+								<animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/>
+								<animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite"/>
+							</circle>
+						</svg>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="toolbar">
+			<table>
+				<tr>
+					<td id="reload" title="Reload UI">
+						<svg height="10" width="10" viewBox="0 0 512 512">
+							<path d="M281.525,228.102l104.758-78.042 c12.082-12.085,12.082-24.259,0-36.342L281.525,35.674c-3.274-2.359-7.359-3.725-11.723-3.725c-10.992,0-19.803,8.536-19.803,19.083  v35.429C144.611,86.737,59.205,172.046,59.205,277.258c0,105.396,85.672,190.793,191.248,190.793 c98.03,0,178.809-73.498,189.977-168.169c0.092-0.275,0.367-3.187,0.367-4.455c0-9.992-8.181-18.169-18.261-18.169h-45.793 c-14.993,0-26.349,10.355-27.893,18.986c-8.811,46.156-49.519,80.954-98.397,80.954c-55.329,0-100.127-44.701-100.127-99.94 c0-55.064,44.523-99.667,99.674-99.941v35.437c0,10.541,8.811,19.076,19.803,19.076C274.166,231.83,278.251,230.471,281.525,228.102 z"/>
+						</svg>
+					</td>
+				</tr>
+				<tr>
+					<td id="support" title="Open support page">
+						<svg height="10" width="10" viewBox="0 0 1792 1792">
+							<path d="M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z"/>
+						</svg>
+					</td>
+				</tr>
+				<tr>
+					<td id="donation" title="Make a donation">
+						<svg height="10" width="10" viewBox="-0.709 -11.555 141.732 141.732">
+							<path d="M140.314,37.654C140.314,16.858,123.402,0,102.537,0c-13.744,0-25.77,7.317-32.379,18.255C63.549,7.317,51.521,0,37.777,0 C16.912,0,0,16.858,0,37.654c0,10.821,4.588,20.57,11.922,27.438h-0.01l54.084,51.584c0.992,1.188,2.48,1.945,4.148,1.945 c1.545,0,2.936-0.653,3.92-1.696l54.346-51.833h-0.016C135.729,58.225,140.314,48.476,140.314,37.654"/>
+						</svg>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="footer"></div>
+		<div class="container">
+			<div class="loader">
+				<svg height="16" viewBox="0 0 120 30">
+					<circle cx="15" cy="15" r="15">
+						<animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/>
+						<animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite"/>
+					</circle>
+					<circle cx="60" cy="15" r="9" fill-opacity="0.3">
+						<animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite"/>
+						<animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite"/>
+					</circle>
+					<circle cx="105" cy="15" r="15">
+						<animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/>
+						<animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite"/>
+					</circle>
+				</svg>
+			</div>
+			<div class="login">
+				<div class="form">
+					<form id="login">
+						<div class="logo"></div>
+						<input type="text" name="nickname" placeholder="nickname" required/>
+						<input type="text" name="meetingname" placeholder="meeting name" required/>
+						<input type="password" name="password" placeholder="password" minlength='6' required/>
+						<button>login</button>
+						<p class="message">Click on the login to start or join a meeting</p>
+					</form>
+				</div>
+			</div>
+			<div class="room"></div>
+			<div class="chat">
+				<div class="header">
+					<span class="icon" id="toggle">
+						<svg width="10" height="10" viewBox="0 0 32 32">
+							<path d="M 3.1259382e-6,16 A 16,12 0 0 1 32.000003,16 16,12 0 0 1 16.000003,28 H 14.000003 C 12.000003,30 8.0000031,32 4.0000031,32 5.0000031,31 6.0000031,28 6.0000031,25.375 V 25.375 A 16,12 0 0 1 3.1259382e-6,16"/>
+						</svg>
+					</span>
+					<span class="icon" id="pin">
+						<svg width="12" height="12" viewBox="0 0 24 24">
+							<path d="M 7.0527344 0.828125 C 6.6700031 0.828125 6.3613281 1.1368 6.3613281 1.5195312 L 6.3613281 3.0742188 C 6.3613281 3.45695 6.6700031 3.7636719 7.0527344 3.7636719 L 7.9746094 3.7636719 L 8.375 9.8671875 L 5.5566406 9.8671875 C 5.1732454 9.8671875 4.8652344 10.175199 4.8652344 10.558594 L 4.8652344 14.068359 C 4.8652344 14.451755 5.1732454 14.759766 5.5566406 14.759766 L 11.208984 14.759766 L 11.208984 23.222656 L 13.027344 23.222656 L 13.027344 14.759766 L 18.681641 14.759766 C 19.065036 14.759766 19.373047 14.451755 19.373047 14.068359 L 19.373047 10.558594 C 19.373047 10.175199 19.065036 9.8671875 18.681641 9.8671875 L 15.861328 9.8671875 L 16.261719 3.7636719 L 17.185547 3.7636719 C 17.568278 3.7636719 17.875 3.45695 17.875 3.0742188 L 17.875 1.5195312 C 17.875 1.1368 17.568278 0.828125 17.185547 0.828125 L 7.0527344 0.828125 z"/>
+						</svg>
+					</span>
+					<span class="icon" id="unpin">
+						<svg width="12" height="12" viewBox="0 0 24 24">
+							<path d="M 11.800929,0.8804624 C 11.469473,0.6890966 11.047815,0.8020795 10.85645,1.1335345 L 10.079106,2.4799334 C 9.88774,2.8113884 10.0017,3.2313548 10.333155,3.4227205 L 11.131522,3.883658 8.426513,9.369653 5.9857422,7.9604731 C 5.6537123,7.7687755 5.2329612,7.8815158 5.0412636,8.2135456 L 3.2863813,11.253091 C 3.094683,11.585122 3.2074231,12.005872 3.5394531,12.19757 L 8.4345255,15.023742 4.2030809,22.35282 5.7778267,23.262 10.009271,15.932922 14.906037,18.76007 C 15.238066,18.951768 15.658817,18.839029 15.850515,18.506998 L 17.605398,15.467452 C 17.797095,15.135422 17.684355,14.71467 17.352325,14.522974 L 14.909863,13.112817 18.308369,8.0272127 19.108428,8.4891269 C 19.439883,8.6804921 19.858872,8.5682242 20.050239,8.2367695 L 20.827582,6.8903703 C 21.018947,6.5589153 20.907657,6.1382342 20.576202,5.9468686 Z"/>
+						</svg>
+					</span>
+				</div>
+				<div class="list"></div>
+				<div class="input">
+					<form id="message">
+						<input type="text" name="message" placeholder="Type a message">
+						<button title="Send">
+							<svg width="12" height="12" viewBox="0 0 32 32">
+								<path d="M1 14 L5 10 L13 18 L27 4 L31 8 L13 26 z"/>
+							</svg>
+						</button>
+					</form>
+				</div>
+			</div>
+			<div class="settings">
+				<table>
+					<tr>
+						<td colspan='2' class="title">
+							<div></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="name"><label for="server">Server</label></td>
+						<td class="value"><textarea id="server" placeholder="Server name"></textarea></td>
+					</tr>
+					<tr>
+						<td class="name"><label for="token">Token</label></td>
+						<td class="value"><input type="password" id="token" placeholder="Server token"></input></td>
+					</tr>
+					<tr>
+						<td colspan='2'>
+							<p>This app uses a Websocket server for signaling purposes (connecting peers via WebRTC). The default Websocket server is from - wss://meetingserver.eu.openode.io. If you leave the token area empty, the app will use the default value.</p>
+							<p>You can change the server to a desired one at any time. Please enter a valid server address and related token in the above input fields. All changes are auto-saved to the memory.</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>		
+		<!-- -->
+		<script type="text/javascript" src="index.js"></script>
+		<script type="text/javascript" src="vendor/safe.js"></script>
+		<script type="text/javascript" src="vendor/peer.js"></script>
+		<script type="text/javascript" src="vendor/meeting.js"></script>
+		<script type="text/javascript" src="vendor/sortable.js"></script>
+		<script type="text/javascript" src="resources/event.js"></script>
+	</body>
+</html>
