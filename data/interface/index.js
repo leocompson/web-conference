@@ -1,13 +1,35 @@
 var config  = {
-  "options": {"state": "hide"},
+  "options": {
+    "state": "hide"
+  },
   "addon": {
     "homepage": function () {
       return chrome.runtime.getManifest().homepage_url;
     }
   },
+  "port": {
+    "name": '',
+    "connect": function () {
+      config.port.name = "webapp";
+      var context = document.documentElement.getAttribute("context");
+      /*  */
+      if (chrome.runtime) {
+        if (chrome.runtime.connect) {
+          if (context !== config.port.name) {
+            config.port.name = "win";
+            chrome.runtime.connect({"name": config.port.name});
+          }
+        }
+      }
+      /*  */
+      document.documentElement.setAttribute("context", config.port.name);
+    }
+  },
   "storage": {
     "local": {},
-    "read": function (id) {return config.storage.local[id]},
+    "read": function (id) {
+      return config.storage.local[id];
+    },
     "load": function (callback) {
       chrome.storage.local.get(null, function (e) {
         config.storage.local = e;
@@ -17,7 +39,7 @@ var config  = {
     "write": function (id, data) {
       if (id) {
         if (data !== '' && data !== null && data !== undefined) {
-          var tmp = {};
+          let tmp = {};
           tmp[id] = data;
           config.storage.local[id] = data;
           chrome.storage.local.set(tmp, function () {});
@@ -28,21 +50,81 @@ var config  = {
       }
     }
   },
+  "load": function () {
+    let pin = document.getElementById("pin");
+    let chat = document.getElementById("chat");
+    let unpin = document.getElementById("unpin");
+    let login = document.getElementById("login");
+    let toggle = document.getElementById("toggle");
+    let reload = document.getElementById("reload");
+    let socket = document.getElementById("socket");
+    let layout = document.getElementById("layout");
+    let options = document.getElementById("options");
+    let support = document.getElementById("support");
+    let message = document.getElementById("message");
+    let donation = document.getElementById("donation");
+    /*  */
+    config.interface.chat = document.querySelector(".chat");
+    config.interface.room = document.querySelector(".room");
+    config.interface.login = document.querySelector(".login");
+    config.interface.loader = document.querySelector(".loader");
+    config.interface.footer = document.querySelector(".footer");
+    config.interface.container = document.querySelector(".container");
+    /*  */
+    pin.addEventListener("click", config.interface.listeners.pin, false);
+    chat.addEventListener("click", config.interface.listeners.chat, false);
+    toggle.addEventListener("click", config.interface.listeners.chat, false);
+    unpin.addEventListener("click", config.interface.listeners.unpin, false);
+    login.addEventListener("submit", config.interface.listeners.login, false);
+    layout.addEventListener("click", config.interface.listeners.layout, false);
+    socket.addEventListener("click", config.interface.listeners.socket, false);
+    options.addEventListener("click", config.interface.listeners.options, false);
+    message.addEventListener("submit", config.interface.listeners.message, false);
+    reload.addEventListener("click", function () {document.location.reload()}, false);
+    /*  */
+    support.addEventListener("click", function () {
+      let url = config.addon.homepage();
+      chrome.tabs.create({"url": url, "active": true});
+    }, false);
+    /*  */
+    donation.addEventListener("click", function () {
+      let url = config.addon.homepage() + "?reason=support";
+      chrome.tabs.create({"url": url, "active": true});
+    }, false);
+    /*  */
+    config.storage.load(config.app.start);
+    window.removeEventListener("load", config.load, false);
+  },
   "resize": {
     "timeout": null,
+    "method": function () {
+      if (config.port.name === "win") {
+        if (config.resize.timeout) window.clearTimeout(config.resize.timeout);
+        config.resize.timeout = window.setTimeout(async function () {
+          let current = await chrome.windows.getCurrent();
+          /*  */
+          config.storage.write("interface.size", {
+            "top": current.top,
+            "left": current.left,
+            "width": current.width,
+            "height": current.height
+          });
+        }, 1000);
+      }
+    },
     "layout": function () {
       if (config.meeting.layout === 'h' || config.meeting.layout === 'g' || config.meeting.layout === 'b') {
         if (config.interface.container) {
-          var room = config.interface.room;
+          let room = config.interface.room;
           if (room && room.children) {
-            var cell = room.children[0];
+            let cell = room.children[0];
             if (cell) {
-              var video = cell.querySelector("video");
+              let video = cell.querySelector("video");
               if (video) {
                 video.removeAttribute("small");
                 /*  */
-                var a = parseInt(window.getComputedStyle(video).width);
-                var b = parseInt(window.getComputedStyle(config.interface.container).width);
+                let a = parseInt(window.getComputedStyle(video).width);
+                let b = parseInt(window.getComputedStyle(config.interface.container).width);
                 if (b - 256 < a) {
                   video.setAttribute("small", '');
                 }
@@ -57,13 +139,13 @@ var config  = {
     "generate": {
       "hash": {
         "code": function (e) {
-          var sum = 0;
-          for (var i = 0; i < e.length; i++) {
+          let sum = 0;
+          for (let i = 0; i < e.length; i++) {
             sum += parseInt(e[i].charCodeAt(0), 10);
           }
           /*  */
-          var parsed = parseFloat('0.' + String(sum));
-          var hash = Math.round(parsed * 1000);
+          let parsed = parseFloat('0.' + String(sum));
+          let hash = Math.round(parsed * 1000);
           if (hash > 1000) hash = 1000;
           if (hash < 1) hash = 1;
           /*  */
@@ -72,14 +154,14 @@ var config  = {
       }
     },
     "start": function () {
-      var token = document.getElementById("token");
-      var server = document.getElementById("server");
-      var nickname = document.querySelector("input[name='nickname']");
-      var password = document.querySelector("input[name='password']");
-      var meetingname = document.querySelector("input[name='meetingname']");
+      let token = document.getElementById("token");
+      let server = document.getElementById("server");
+      let nickname = document.querySelector("input[name='nickname']");
+      let password = document.querySelector("input[name='password']");
+      let meetingname = document.querySelector("input[name='meetingname']");
       /*  */
-      var TOKEN = '';
-      var SERVER = "wss://meetingserver.eu.openode.io/[CHANNEL_ID]?apiKey=[API_KEY]";
+      let TOKEN = '';
+      let SERVER = "wss://connect.meetingserver.repl.co/[CHANNEL_ID]?apiKey=[API_KEY]";
       /*  */
       config.meeting.mode = config.storage.read("mode") !== undefined ? config.storage.read("mode") : "overlay";
       config.meeting.layout = config.storage.read("layout") !== undefined ? config.storage.read("layout") : 'b';
@@ -112,9 +194,11 @@ var config  = {
     "loader": null,
     "footer": null,
     "container": null,
-    "sortable": {"object": null},
+    "sortable": {
+      "object": null
+    },
     "update": function () {
-      var room = config.interface.room;
+      let room = config.interface.room;
       if (room.children) {
         room.removeAttribute("grid-template-columns-r");
         room.removeAttribute("grid-template-columns-d");
@@ -131,12 +215,13 @@ var config  = {
           room.setAttribute("grid-template-columns-r", '');
         }
         /*  */
-        var cells = [...room.children];
-        for (var i = 0; i < cells.length; i++) {
-          var cell = cells[i];
+        let cells = [...room.children];
+        for (let i = 0; i < cells.length; i++) {
+          let cell = cells[i];
           if (cell) {
-            if (cell.querySelector("video") === null) cell.remove();
-            else {
+            if (cell.querySelector("video") === null) {
+              cell.remove();
+            } else {
               cell.removeAttribute("float-left");
               cell.removeAttribute("float-right");
               cell.removeAttribute("grid-area-h");
@@ -173,28 +258,19 @@ var config  = {
       /*  */
       config.resize.layout();
       /*  */
-      var members = config.meeting.members;
-      var repeat = config.meeting.layout.substring(1);
-      var divide = repeat ? Math.round(members / repeat) : 1;
+      let members = config.meeting.members;
+      let repeat = config.meeting.layout.substring(1);
+      let divide = repeat ? Math.round(members / repeat) : 1;
       /*  */
       document.documentElement.style.setProperty("--divide", divide);
       document.documentElement.style.setProperty("--repeat", repeat);
       document.documentElement.style.setProperty("--members", members);
     },
     "listeners": {
-      "socket": function (e) {
-        var state = e.target.getAttribute("state");
-        var method = state === "closed" ? "restart" : "close";
-        /*  */
-        config.meeting.engine.socket[method]();
-        e.target.setAttribute("state", state === "closed" ? "loading" : "closed");
-        if (method === "restart") config.meeting.engine.send({"method": "socket-restart"});
-        config.interface.footer.textContent = "> socket  - " + e.target.getAttribute("state");
-      },
       "options": function () {
-        var options = document.querySelector(".options");
+        let options = document.querySelector(".options");
         config.options.state = config.options.state === "show" ? "hide" : "show";
-        var settings = config.interface.container.querySelector(".settings");
+        let settings = config.interface.container.querySelector(".settings");
         settings.setAttribute("state", config.options.state);
         options.setAttribute("state", config.options.state);
       },
@@ -218,12 +294,21 @@ var config  = {
         config.interface.container.setAttribute("state", config.meeting.state);
         config.interface.container.setAttribute("target", "room");
       },
+      "socket": function (e) {
+        let state = e.target.getAttribute("state");
+        let method = state === "closed" ? "restart" : "close";
+        /*  */
+        config.meeting.engine.socket[method]();
+        e.target.setAttribute("state", state === "closed" ? "loading" : "closed");
+        if (method === "restart") config.meeting.engine.send({"method": "socket-restart"});
+        config.interface.footer.textContent = "> socket  - " + e.target.getAttribute("state");
+      },
       "message": function (e) {
         e.preventDefault();
         e.stopPropagation();
         /*  */
-        var form = new FormData(e.target);
-        var message = form.get("message");
+        let form = new FormData(e.target);
+        let message = form.get("message");
         if (message) {
           config.meeting.engine.send({"context": "chat", "message": message});
           config.meeting.add.chat(null, {"context": "chat", "message": message});
@@ -235,15 +320,15 @@ var config  = {
         e.preventDefault();
         e.stopPropagation();
         /*  */
-        var form = new FormData(e.target);
-        var nickname = form.get("nickname");
-        var password = form.get("password");
-        var meetingname = form.get("meetingname");
+        let form = new FormData(e.target);
+        let nickname = form.get("nickname");
+        let password = form.get("password");
+        let meetingname = form.get("meetingname");
         /*  */
         config.meeting.login(nickname, meetingname, password);
       },
       "layout": function () {
-        var index = config.meeting.layouts.indexOf(config.meeting.layout);
+        let index = config.meeting.layouts.indexOf(config.meeting.layout);
         /*  */
         config.meeting.layout = index > -1 && index < config.meeting.layouts.length - 1 ? config.meeting.layouts[index + 1] : config.meeting.layouts[0];
         config.interface.room.setAttribute("layout", config.meeting.layout);
@@ -269,11 +354,11 @@ var config  = {
         config.interface.update();
       },
       "interface": function () {
-        var title = document.querySelector(".title");
-        var header = document.querySelector(".header");
-        var options = document.querySelector(".options");
-        var toolbar = document.querySelector(".toolbar");
-        var controls = document.querySelector(".controls");
+        let title = document.querySelector(".title");
+        let header = document.querySelector(".header");
+        let options = document.querySelector(".options");
+        let toolbar = document.querySelector(".toolbar");
+        let controls = document.querySelector(".controls");
         /*  */
         config.interface.login.style.display = "none";
         config.interface.loader.style.display = "flex";
@@ -296,16 +381,16 @@ var config  = {
     },
     "add": {
       "chat": function (guid, e) {
-        var template = document.querySelector("template[for='chat-item']");
-        var list = config.interface.chat.querySelector(".list");
+        let template = document.querySelector("template[for='chat-item']");
+        let list = config.interface.chat.querySelector(".list");
         /*  */
-        var clone = template.content.cloneNode(true);
-        var item = clone.querySelector(".item");
+        let clone = template.content.cloneNode(true);
+        let item = clone.querySelector(".item");
         /*  */
-        var diff = list.scrollHeight - list.scrollTop;
-        var peer = guid ? config.meeting.engine.peers[guid] : '';
-        var height = parseInt(window.getComputedStyle(list).height);
-        var nickname = peer && peer.extra ? peer.extra.nickname : "me";
+        let diff = list.scrollHeight - list.scrollTop;
+        let peer = guid ? config.meeting.engine.peers[guid] : '';
+        let height = parseInt(window.getComputedStyle(list).height);
+        let nickname = peer && peer.extra ? peer.extra.nickname : "me";
         /*  */
         list.appendChild(item);
         item.querySelector(".name").textContent = nickname;
@@ -313,10 +398,12 @@ var config  = {
         //if (!e.message) config.interface.footer.textContent = nickname + " logged in";
         item.querySelector(".body").textContent = e.context && e.context === "chat" ? e.message : '';
         /*  */
-        if ((diff - height) < 48) list.scrollTo(0, list.scrollHeight);
+        if ((diff - height) < 48) {
+          list.scrollTo(0, list.scrollHeight);
+        }
       },
       "member": function (peer, video, stream) {      
-        var container = document.createElement("div");
+        let container = document.createElement("div");
         /*  */
         container.setAttribute("order", config.meeting.order++);
         container.setAttribute("class", "member");
@@ -326,18 +413,19 @@ var config  = {
         video.setAttribute("class", "media");
         if (peer === null) video.play();
         container.appendChild(video);
+        /*  */
         video.addEventListener("loadedmetadata", function () {
           video.controls = true;
           config.interface.loader.style.display = "none";
           config.interface.loader.removeAttribute("white");
         });
         /*  */
-        var nickname = document.createElement("div");
+        let nickname = document.createElement("div");
         nickname.textContent = peer ? peer.extra.nickname : '';
         nickname.setAttribute("class", "nickname");
         container.appendChild(nickname);
         /*  */
-        var close = document.createElement("div");
+        let close = document.createElement("div");
         close.setAttribute("class", "close");
         if (peer) close.peer = peer;
         close.textContent = '✕';
@@ -366,7 +454,7 @@ var config  = {
         config.meeting.engine = new Meeting(config.meeting.server.name, config.meeting.server.token);
         /*  */
         config.meeting.engine.password(password).then(() => {
-          var hash = config.app.generate.hash.code(meetingname);
+          let hash = config.app.generate.hash.code(meetingname);
           return config.meeting.engine.join(hash, {"nickname": nickname}).then(() => {
             navigator.mediaDevices.getUserMedia(configuration.media).then(stream => {
               config.meeting.add.member(null, null, stream);
@@ -399,7 +487,7 @@ var config  = {
         config.meeting.engine.onConnectionStateChanged.addListener((type, state) => {
           config.interface.footer.textContent = '> '  + type + ' - ' + state;
           if (type === "socket") {
-            var socket = document.getElementById("socket");
+            let socket = document.getElementById("socket");
             socket.setAttribute("state", state);
           }
         });
@@ -408,60 +496,7 @@ var config  = {
   }
 };
 
-var load = function () {
-  var pin = document.getElementById("pin");
-  var chat = document.getElementById("chat");
-  var unpin = document.getElementById("unpin");
-  var login = document.getElementById("login");
-  var toggle = document.getElementById("toggle");
-  var reload = document.getElementById("reload");
-  var socket = document.getElementById("socket");
-  var layout = document.getElementById("layout");
-  var options = document.getElementById("options");
-  var support = document.getElementById("support");
-  var message = document.getElementById("message");
-  var donation = document.getElementById("donation");
-  /*  */
-  config.interface.chat = document.querySelector(".chat");
-  config.interface.room = document.querySelector(".room");
-  config.interface.login = document.querySelector(".login");
-  config.interface.loader = document.querySelector(".loader");
-  config.interface.footer = document.querySelector(".footer");
-  config.interface.container = document.querySelector(".container");
-  /*  */
-  pin.addEventListener("click", config.interface.listeners.pin, false);
-  chat.addEventListener("click", config.interface.listeners.chat, false);
-  toggle.addEventListener("click", config.interface.listeners.chat, false);
-  unpin.addEventListener("click", config.interface.listeners.unpin, false);
-  login.addEventListener("submit", config.interface.listeners.login, false);
-  layout.addEventListener("click", config.interface.listeners.layout, false);
-  socket.addEventListener("click", config.interface.listeners.socket, false);
-  options.addEventListener("click", config.interface.listeners.options, false);
-  message.addEventListener("submit", config.interface.listeners.message, false);
-  reload.addEventListener("click", function () {document.location.reload()}, false);
-  /*  */
-  support.addEventListener("click", function () {
-    var url = config.addon.homepage();
-    chrome.tabs.create({"url": url, "active": true});
-  }, false);
-  /*  */
-  donation.addEventListener("click", function () {
-    var url = config.addon.homepage() + "?reason=support";
-    chrome.tabs.create({"url": url, "active": true});
-  }, false);
-  /*  */
-  config.storage.load(config.app.start);
-  window.removeEventListener("load", load, false);
-};
+config.port.connect();
 
-window.addEventListener("resize", function () {
-  config.resize.layout();
-  /*  */
-  if (config.resize.timeout) window.clearTimeout(config.resize.timeout);
-  config.resize.timeout = window.setTimeout(function () {
-    config.storage.write("width", window.innerWidth || window.outerWidth);
-    config.storage.write("height", window.innerHeight || window.outerHeight);
-  }, 1000);
-}, false);
-
-window.addEventListener("load", load, false);
+window.addEventListener("load", config.load, false);
+window.addEventListener("resize", config.resize.method, false);

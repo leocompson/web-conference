@@ -1,13 +1,17 @@
 {
-  "version": "0.1.1",
-  "manifest_version": 2,
+  "version": "0.1.2",
+  "manifest_version": 3,
   "name": "Web Meeting",
   "permissions": ["storage"],
-  "short_name": "web-meeting",
-  "background": {"scripts": ["lib/background.js"]},
   "homepage_url": "https://mybrowseraddon.com/web-meeting.html",
   "description": "Start a web meeting (including video, audio, and chat) with your friends and right in your browser!",
-  "browser_action": {
+  "commands": {
+    "_execute_action": {}
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
     "default_title": "Web Meeting",
     "default_icon": {
       "16": "data/icons/16.png",
