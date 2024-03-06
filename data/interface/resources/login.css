@@ -29,10 +29,10 @@
 .form form input {
   border: 0;
   outline: 0;
-  color: #555;
+  color: #333;
   width: 100%;
   padding: 12px;
-  font-size: 12px;
+  font-size: 13px;
   margin: 0 0 10px;
   background: #ececec;
   box-sizing: border-box;
@@ -45,7 +45,7 @@
   width: 100%;
   color: #fff;
   padding: 12px;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   background: #4776da;
   text-transform: uppercase;
@@ -68,7 +68,7 @@
 
 .form .message {
   color: #777;
-  font-size: 12px;
+  font-size: 13px;
   margin: 12px 0 0;
   user-select: none;
 }

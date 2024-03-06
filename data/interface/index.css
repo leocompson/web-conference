@@ -64,7 +64,7 @@ body {
 }
 
 .options table tr td svg, .controls table tr td svg, .toolbar table tr td svg {
-  fill: #777;
+  fill: #555;
   pointer-events: none;
   vertical-align: middle;
 }
@@ -87,7 +87,7 @@ body {
   height: 22px;
   padding: 0 5px;
   position: fixed;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 22px;
   pointer-events: none;
   font-family: monospace;

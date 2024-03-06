@@ -11,7 +11,7 @@ var config  = {
     "name": '',
     "connect": function () {
       config.port.name = "webapp";
-      var context = document.documentElement.getAttribute("context");
+      const context = document.documentElement.getAttribute("context");
       /*  */
       if (chrome.runtime) {
         if (chrome.runtime.connect) {
@@ -51,18 +51,18 @@ var config  = {
     }
   },
   "load": function () {
-    let pin = document.getElementById("pin");
-    let chat = document.getElementById("chat");
-    let unpin = document.getElementById("unpin");
-    let login = document.getElementById("login");
-    let toggle = document.getElementById("toggle");
-    let reload = document.getElementById("reload");
-    let socket = document.getElementById("socket");
-    let layout = document.getElementById("layout");
-    let options = document.getElementById("options");
-    let support = document.getElementById("support");
-    let message = document.getElementById("message");
-    let donation = document.getElementById("donation");
+    const pin = document.getElementById("pin");
+    const chat = document.getElementById("chat");
+    const unpin = document.getElementById("unpin");
+    const login = document.getElementById("login");
+    const toggle = document.getElementById("toggle");
+    const reload = document.getElementById("reload");
+    const socket = document.getElementById("socket");
+    const layout = document.getElementById("layout");
+    const options = document.getElementById("options");
+    const support = document.getElementById("support");
+    const message = document.getElementById("message");
+    const donation = document.getElementById("donation");
     /*  */
     config.interface.chat = document.querySelector(".chat");
     config.interface.room = document.querySelector(".room");
@@ -83,12 +83,12 @@ var config  = {
     reload.addEventListener("click", function () {document.location.reload()}, false);
     /*  */
     support.addEventListener("click", function () {
-      let url = config.addon.homepage();
+      const url = config.addon.homepage();
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
     donation.addEventListener("click", function () {
-      let url = config.addon.homepage() + "?reason=support";
+      const url = config.addon.homepage() + "?reason=support";
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
@@ -101,7 +101,7 @@ var config  = {
       if (config.port.name === "win") {
         if (config.resize.timeout) window.clearTimeout(config.resize.timeout);
         config.resize.timeout = window.setTimeout(async function () {
-          let current = await chrome.windows.getCurrent();
+          const current = await chrome.windows.getCurrent();
           /*  */
           config.storage.write("interface.size", {
             "top": current.top,
@@ -154,14 +154,14 @@ var config  = {
       }
     },
     "start": function () {
-      let token = document.getElementById("token");
-      let server = document.getElementById("server");
-      let nickname = document.querySelector("input[name='nickname']");
-      let password = document.querySelector("input[name='password']");
-      let meetingname = document.querySelector("input[name='meetingname']");
+      const token = document.getElementById("token");
+      const server = document.getElementById("server");
+      const nickname = document.querySelector("input[name='nickname']");
+      const password = document.querySelector("input[name='password']");
+      const meetingname = document.querySelector("input[name='meetingname']");
       /*  */
       let TOKEN = '';
-      let SERVER = "wss://connect.meetingserver.repl.co/[CHANNEL_ID]?apiKey=[API_KEY]";
+      let SERVER = "wss://connect-6c2v.onrender.com/[CHANNEL_ID]?apiKey=[API_KEY]";
       /*  */
       config.meeting.mode = config.storage.read("mode") !== undefined ? config.storage.read("mode") : "overlay";
       config.meeting.layout = config.storage.read("layout") !== undefined ? config.storage.read("layout") : 'b';
@@ -268,9 +268,9 @@ var config  = {
     },
     "listeners": {
       "options": function () {
-        let options = document.querySelector(".options");
+        const options = document.querySelector(".options");
         config.options.state = config.options.state === "show" ? "hide" : "show";
-        let settings = config.interface.container.querySelector(".settings");
+        const settings = config.interface.container.querySelector(".settings");
         settings.setAttribute("state", config.options.state);
         options.setAttribute("state", config.options.state);
       },
@@ -354,11 +354,11 @@ var config  = {
         config.interface.update();
       },
       "interface": function () {
-        let title = document.querySelector(".title");
-        let header = document.querySelector(".header");
-        let options = document.querySelector(".options");
-        let toolbar = document.querySelector(".toolbar");
-        let controls = document.querySelector(".controls");
+        const title = document.querySelector(".title");
+        const header = document.querySelector(".header");
+        const options = document.querySelector(".options");
+        const toolbar = document.querySelector(".toolbar");
+        const controls = document.querySelector(".controls");
         /*  */
         config.interface.login.style.display = "none";
         config.interface.loader.style.display = "flex";
@@ -403,7 +403,7 @@ var config  = {
         }
       },
       "member": function (peer, video, stream) {      
-        let container = document.createElement("div");
+        const container = document.createElement("div");
         /*  */
         container.setAttribute("order", config.meeting.order++);
         container.setAttribute("class", "member");
@@ -420,12 +420,12 @@ var config  = {
           config.interface.loader.removeAttribute("white");
         });
         /*  */
-        let nickname = document.createElement("div");
+        const nickname = document.createElement("div");
         nickname.textContent = peer ? peer.extra.nickname : '';
         nickname.setAttribute("class", "nickname");
         container.appendChild(nickname);
         /*  */
-        let close = document.createElement("div");
+        const close = document.createElement("div");
         close.setAttribute("class", "close");
         if (peer) close.peer = peer;
         close.textContent = '✕';
