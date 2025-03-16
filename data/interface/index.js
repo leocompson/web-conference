@@ -115,16 +115,16 @@ var config  = {
     "layout": function () {
       if (config.meeting.layout === 'h' || config.meeting.layout === 'g' || config.meeting.layout === 'b') {
         if (config.interface.container) {
-          let room = config.interface.room;
+          const room = config.interface.room;
           if (room && room.children) {
-            let cell = room.children[0];
+            const cell = room.children[0];
             if (cell) {
-              let video = cell.querySelector("video");
+              const video = cell.querySelector("video");
               if (video) {
                 video.removeAttribute("small");
                 /*  */
-                let a = parseInt(window.getComputedStyle(video).width);
-                let b = parseInt(window.getComputedStyle(config.interface.container).width);
+                const a = parseInt(window.getComputedStyle(video).width);
+                const b = parseInt(window.getComputedStyle(config.interface.container).width);
                 if (b - 256 < a) {
                   video.setAttribute("small", '');
                 }
@@ -144,7 +144,7 @@ var config  = {
             sum += parseInt(e[i].charCodeAt(0), 10);
           }
           /*  */
-          let parsed = parseFloat('0.' + String(sum));
+          const parsed = parseFloat('0.' + String(sum));
           let hash = Math.round(parsed * 1000);
           if (hash > 1000) hash = 1000;
           if (hash < 1) hash = 1;
@@ -160,8 +160,8 @@ var config  = {
       const password = document.querySelector("input[name='password']");
       const meetingname = document.querySelector("input[name='meetingname']");
       /*  */
-      let TOKEN = '';
-      let SERVER = "wss://connect-6c2v.onrender.com/[CHANNEL_ID]?apiKey=[API_KEY]";
+      const TOKEN = '';
+      const SERVER = "wss://connect-6c2v.onrender.com/[CHANNEL_ID]?apiKey=[API_KEY]";
       /*  */
       config.meeting.mode = config.storage.read("mode") !== undefined ? config.storage.read("mode") : "overlay";
       config.meeting.layout = config.storage.read("layout") !== undefined ? config.storage.read("layout") : 'b';
@@ -198,7 +198,7 @@ var config  = {
       "object": null
     },
     "update": function () {
-      let room = config.interface.room;
+      const room = config.interface.room;
       if (room.children) {
         room.removeAttribute("grid-template-columns-r");
         room.removeAttribute("grid-template-columns-d");
@@ -215,9 +215,9 @@ var config  = {
           room.setAttribute("grid-template-columns-r", '');
         }
         /*  */
-        let cells = [...room.children];
+        const cells = [...room.children];
         for (let i = 0; i < cells.length; i++) {
-          let cell = cells[i];
+          const cell = cells[i];
           if (cell) {
             if (cell.querySelector("video") === null) {
               cell.remove();
@@ -258,9 +258,9 @@ var config  = {
       /*  */
       config.resize.layout();
       /*  */
-      let members = config.meeting.members;
-      let repeat = config.meeting.layout.substring(1);
-      let divide = repeat ? Math.round(members / repeat) : 1;
+      const members = config.meeting.members;
+      const repeat = config.meeting.layout.substring(1);
+      const divide = repeat ? Math.round(members / repeat) : 1;
       /*  */
       document.documentElement.style.setProperty("--divide", divide);
       document.documentElement.style.setProperty("--repeat", repeat);
@@ -295,8 +295,8 @@ var config  = {
         config.interface.container.setAttribute("target", "room");
       },
       "socket": function (e) {
-        let state = e.target.getAttribute("state");
-        let method = state === "closed" ? "restart" : "close";
+        const state = e.target.getAttribute("state");
+        const method = state === "closed" ? "restart" : "close";
         /*  */
         config.meeting.engine.socket[method]();
         e.target.setAttribute("state", state === "closed" ? "loading" : "closed");
@@ -307,8 +307,8 @@ var config  = {
         e.preventDefault();
         e.stopPropagation();
         /*  */
-        let form = new FormData(e.target);
-        let message = form.get("message");
+        const form = new FormData(e.target);
+        const message = form.get("message");
         if (message) {
           config.meeting.engine.send({"context": "chat", "message": message});
           config.meeting.add.chat(null, {"context": "chat", "message": message});
@@ -320,15 +320,15 @@ var config  = {
         e.preventDefault();
         e.stopPropagation();
         /*  */
-        let form = new FormData(e.target);
-        let nickname = form.get("nickname");
-        let password = form.get("password");
-        let meetingname = form.get("meetingname");
+        const form = new FormData(e.target);
+        const nickname = form.get("nickname");
+        const password = form.get("password");
+        const meetingname = form.get("meetingname");
         /*  */
         config.meeting.login(nickname, meetingname, password);
       },
       "layout": function () {
-        let index = config.meeting.layouts.indexOf(config.meeting.layout);
+        const index = config.meeting.layouts.indexOf(config.meeting.layout);
         /*  */
         config.meeting.layout = index > -1 && index < config.meeting.layouts.length - 1 ? config.meeting.layouts[index + 1] : config.meeting.layouts[0];
         config.interface.room.setAttribute("layout", config.meeting.layout);
@@ -381,16 +381,16 @@ var config  = {
     },
     "add": {
       "chat": function (guid, e) {
-        let template = document.querySelector("template[for='chat-item']");
-        let list = config.interface.chat.querySelector(".list");
+        const template = document.querySelector("template[for='chat-item']");
+        const list = config.interface.chat.querySelector(".list");
         /*  */
-        let clone = template.content.cloneNode(true);
-        let item = clone.querySelector(".item");
+        const clone = template.content.cloneNode(true);
+        const item = clone.querySelector(".item");
         /*  */
-        let diff = list.scrollHeight - list.scrollTop;
-        let peer = guid ? config.meeting.engine.peers[guid] : '';
-        let height = parseInt(window.getComputedStyle(list).height);
-        let nickname = peer && peer.extra ? peer.extra.nickname : "me";
+        const diff = list.scrollHeight - list.scrollTop;
+        const peer = guid ? config.meeting.engine.peers[guid] : '';
+        const height = parseInt(window.getComputedStyle(list).height);
+        const nickname = peer && peer.extra ? peer.extra.nickname : "me";
         /*  */
         list.appendChild(item);
         item.querySelector(".name").textContent = nickname;
@@ -454,13 +454,13 @@ var config  = {
         config.meeting.engine = new Meeting(config.meeting.server.name, config.meeting.server.token);
         /*  */
         config.meeting.engine.password(password).then(() => {
-          let hash = config.app.generate.hash.code(meetingname);
+          const hash = config.app.generate.hash.code(meetingname);
           return config.meeting.engine.join(hash, {"nickname": nickname}).then(() => {
             navigator.mediaDevices.getUserMedia(configuration.media).then(stream => {
               config.meeting.add.member(null, null, stream);
             }).catch(e => {
               //console.error(e);
-              config.interface.footer.textContent = "> " + e.message;
+              config.interface.footer.textContent = "> navigator.mediaDevices: " + e.message;
             });
           });
         }).catch(e => {
@@ -487,7 +487,7 @@ var config  = {
         config.meeting.engine.onConnectionStateChanged.addListener((type, state) => {
           config.interface.footer.textContent = '> '  + type + ' - ' + state;
           if (type === "socket") {
-            let socket = document.getElementById("socket");
+            const socket = document.getElementById("socket");
             socket.setAttribute("state", state);
           }
         });

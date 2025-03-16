@@ -15,6 +15,7 @@
   padding: 28px 48px;
   position: relative;
   text-align: center;
+  border-radius: 7px;
   background-color: #fff;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.3);
 }
@@ -67,7 +68,7 @@
 }
 
 .form .message {
-  color: #777;
+  color: #555;
   font-size: 13px;
   margin: 12px 0 0;
   user-select: none;
