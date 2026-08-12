@@ -1,8 +1,7 @@
 .container .loader {
   top: 0;
-  left: 0;
+  left: 44px;
   z-index: 11;
-  width: 100vw;
   margin: auto;
   height: 100vh;
   display: flex;
@@ -10,6 +9,7 @@
   align-items: center;
   pointer-events: none;
   justify-content: center;
+  width: calc(100vw - 88px);
   background-color: transparent;
 }
 

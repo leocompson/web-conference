@@ -2,7 +2,7 @@
   margin: 0;
   width: 100%;
   display: none;
-  background-color: #333;
+  background-color: #1e1e1e;
 }
 
 .container .room .member {
@@ -11,31 +11,32 @@
   height: auto;
   position: relative;
   text-align: center;
-  background-color: #444;
+  background-color: #1e1e1e;
 }
 
 .container .room .member[grid-row-end] {grid-row-end: var(--members)}
 .container .room .member[grid-column-end] {grid-column-end: var(--members)}
 .container .room .member[grid-area-v] {grid-area: var(--members) / 1 / auto / auto}
 .container .room .member[grid-area-h] {grid-area: 1 / var(--members) / auto / auto}
-.container .room .member[float-left] {margin-left: calc(calc(100vw / var(--members)) - 100vw)}
-.container .room .member[float-right] {margin-left: calc(calc(100vw / var(--members)) - 128px)}
+.container .room .member[float-left] {margin-left: calc(calc(100vw / var(--members)) - 100vw + 74px)}
+.container .room .member[float-right] {margin-left: calc(calc(100vw / var(--members)) - 128px - 18px)}
 .container .room[grid-template-columns-r] {grid-template-columns: repeat(auto-fill, calc(100% / (var(--members) - 0)))}
 .container .room[grid-template-columns-d] {grid-template-columns: repeat(auto-fill, calc(100% / (var(--members) - 1)))}
 
 .container .room .member .nickname {
   top: 5px;
   width: auto;
-  height: 20px;
-  padding: 0 5px;
-  font-size: 13px;
+  height: 24px;
+  padding: 0 10px;
+  font-size: 16px;
   text-align: left;
   line-height: 20px;
   position: absolute;
-  left: calc(50% - 36px);
-  background-color: transparent;
-  font-family: arial,sans-serif;
-  color: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+  left: calc(50% - 58px);
+  color: rgb(255 255 255 / 90%);
+  background-color: rgb(0 0 0 / 15%);
+  font-family: system-ui, sans-serif;
 }
 
 .container .room .member .close {
@@ -68,18 +69,19 @@
   padding: 0;
   width: auto;
   margin: auto;
-  height: 100%;
   outline: none;
+  aspect-ratio: 1;
   max-width: 100vh;
   object-fit: cover;
   background-color: #222;
+  height: calc(100% - 2px);
   border: solid 1px #7d7d7d;
 }
 
 /* --- a --- */
 
 .container .room[layout='a'] {
-  height: 100vh;
+  height: calc(100vh - 28px);
 }
 
 .container .room[layout='a'] .member {
@@ -90,20 +92,20 @@
 
 .container .room[layout='a'] .member video {
   width: 100%;
-  max-height: 128px;
+  max-height: 92px;
 }
 
 .container .room[layout='a'] .member:nth-child(1) {
-  margin: 0;
-  width: auto;
-  height: auto;
+  margin: 1px auto;
   grid-row-start: 1;
   grid-column-start: 1;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
 }
 
 .container .room[layout='a'] .member:nth-child(1) video {
   width: 100vw;
-  max-height: calc(100vh - 132px);
+  max-height: calc(100vh - 128px);
 }
 
 /* --- b --- */
@@ -111,22 +113,22 @@
 .container .room[layout='b'],
 .container .room[layout='g'],
 .container .room[layout='h'] {
-  height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
+  height: calc(100vh - 28px);
 }
 
 .container .room[layout='b'] .member,
 .container .room[layout='g'] .member,
 .container .room[layout='h'] .member {
-  height: 128px;
+  height: 98px;
 }
 
 .container .room[layout='b'] .member video,
 .container .room[layout='g'] .member video,
 .container .room[layout='h'] .member video {
   width: 128px;
-  height: 128px;
+  height: 96px;
 }
 
 .container .room[layout='b'] .member:nth-child(1),
@@ -143,46 +145,33 @@
 }
 
 .container .room[layout='b'] .member:nth-child(1) {
-  width: auto;
-  height: calc(100vh - 129px);
+  margin: 1px auto;
+  width: calc(100% - 2px);
+  height: calc(100vh - 130px);
 }
 
 .container .room[layout='b'] .member:nth-child(1) video,
 .container .room[layout='g'] .member:nth-child(1) video,
 .container .room[layout='h'] .member:nth-child(1) video {
-  top: auto;
+  top: 1px;
   width: auto;
-  height: 100vh;
   position: fixed;
+  height: calc(100vh - 32px);
 }
 
 .container .room[layout='b'] .member:nth-child(1) video {
   width: 100%;
-  max-height: calc(100vh - 132px);
+  margin-top: 1px;
+  max-height: calc(100vh - 134px);
 }
 
-.container .room[layout='b'] .member:nth-child(1) video {left: 50%}
-.container .room[layout='g'] .member:nth-child(1) video {left: 50%}
-.container .room[layout='h'] .member:nth-child(1) video {right: 50%}
-
-.container .room[layout='b'] .member:nth-child(1) video {
-  margin-top: -1px;
-  margin-left: -50vh;
-}
-
-.container[mode='inline'][state='show'] .room[layout='b'] .member:nth-child(1) video,
-.container[mode='inline'][state='show'] .room[layout='g'] .member:nth-child(1) video {
-  margin-left: calc(-50vh - 150px);
-}
-
-.container[mode='inline'][state='show'] .room[layout='h'] .member:nth-child(1) video {
-  margin-right: calc(-50vh - 150px);
-}
+.container .room[layout='g'] .member:nth-child(1) video {left: 45px}
+.container .room[layout='h'] .member:nth-child(1) video {right: 45px}
 
 .container .room[layout='b'] .member:nth-child(1) video[small] {
-  left: 0;
-  width: 100vw;
+  left: 88px;
   margin-left: 0;
+  width: calc(100vw - 182px);
 }
 
 /* --- c --- */
@@ -192,9 +181,9 @@
 }
 
 .container .room[layout='c'] {
-  height: 100vh;
   overflow: auto;
   scrollbar-width: none;
+  height: calc(100vh - 28px);
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
@@ -205,8 +194,8 @@
 }
 
 .container .room[layout='c'] .member video {
-  width: 100%;
   height: auto;
+  width: calc(100% - 4px);
 }
 
 /* --- d --- */
@@ -216,19 +205,20 @@
 }
 
 .container .room[layout*='d'] {
-  height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
+  height: calc(100vh - 28px);
   grid-template-rows: repeat(var(--divide), 1fr);
   grid-template-columns: repeat(var(--repeat), 1fr);
 }
 
 .container .room[layout*='i'] {
-  width: 100vw;
-  height: 100vh;
+  margin: 0 auto;
   overflow-x: auto;
   overflow-y: hidden;
+  width: calc(100vw - 88px);
+  height: calc(100vh - 28px);
   grid-template-rows: repeat(var(--repeat), 1fr);
   grid-template-columns: repeat(var(--divide), 1fr);
 }
@@ -250,23 +240,33 @@
 }
 
 .container .room[layout*='d'] .member {
+  margin: 1px auto;
   min-height: 300px;
   width: calc(100% - 2px);
-}
-
-.container .room[layout*='i'] .member {
-  min-width: 300px;
   height: calc(100% - 2px);
 }
 
-.container .room[layout*='d'] .member video {width: 100%}
-.container .room[layout*='i'] .member video {height: 100%}
+.container .room[layout*='i'] .member {
+  margin: 1px auto;
+  min-width: 300px;
+  height: calc(100% - 2px);
+  max-width: calc(100% - 2px);
+}
+
+.container .room[layout*='d'] .member video {
+  width: calc(100% - 2px);
+}
+
+.container .room[layout*='i'] .member video {
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+}
 
 /* --- e --- */
 
 .container .room[layout='e'] {
-  height: 100vh;
   overflow-x: auto;
+  height: calc(100vh - 28px);
 }
 
 .container .room[layout='e'] .member,
@@ -289,9 +289,9 @@
 }
 
 .container .room[layout='f'] {
-  height: 100vh;
   overflow-y: auto;
   scrollbar-width: none;
+  height: calc(100vh - 28px);
 }
 
 /* --- g --- */
@@ -316,7 +316,7 @@
 .container .room[layout='g'] .member:nth-child(1),
 .container .room[layout='h'] .member:nth-child(1) {
   width: 0;
-  height: 100vh; 
+  height: calc(100vh - 28px);
 }
 
 .container .room[layout='g'] .member:nth-child(1) video,
@@ -326,21 +326,15 @@
 
 .container .room[layout='g'] .member:nth-child(1) video[small],
 .container .room[layout='h'] .member:nth-child(1) video[small] {
-  width: calc(100vw - 128px);
+  width: calc(100vw - 223px);
 }
 
 .container .room[layout='g'] .member:nth-child(1) video[small] {
-  left: 0;
+  left: 45px;
   margin-left: 0 !important;
 }
 
 .container .room[layout='h'] .member:nth-child(1) video[small] {
-  right: 0;
+  right: 45px;
   margin-right: 0 !important;
 }
-
-.container[mode='overlay'] .room[layout='g'] .member:nth-child(1) video {margin-left: -50vh}
-.container[mode='overlay'] .room[layout='h'] .member:nth-child(1) video {margin-right: -50vh}
-
-.container[mode='inline'][state='hide'] .room[layout='g'] .member:nth-child(1) video {margin-left: -50vh}
-.container[mode='inline'][state='hide'] .room[layout='h'] .member:nth-child(1) video {margin-right: -50vh}

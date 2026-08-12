@@ -3,16 +3,20 @@ body {
   border: 0;
   padding: 0;
   overflow: hidden;
-  font-family: arial, sans-serif;
+  background-color: #1e1e1e;
+  font-family: system-ui, sans-serif;
 }
 
 .container {
-  width: 100%;
-  height: auto;
   display: grid;
   margin: 0 auto;
   overflow: hidden;
   text-align: center;
+  width: calc(100% - 88px);
+  border: solid 1px #393939;
+  height: calc(100vh - 28px);
+  border-bottom: 0;
+  border-top: 0;
 }
 
 .options, .controls, .toolbar {
@@ -39,7 +43,7 @@ body {
   transition: all 700ms ease-in-out;
 }
 
-.options[state="show"] {
+.options[state='show'] {
   transform: translate(257px, 0);
 }
 
@@ -66,21 +70,15 @@ body {
 .options table tr td:hover,
 .toolbar table tr td:hover,
 .controls table tr td:hover {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .options table tr td svg,
 .controls table tr td svg,
 .toolbar table tr td svg {
-  fill: #555;
+  fill: #e4e4e4;
   pointer-events: none;
   vertical-align: middle;
-}
-
-.options[dark] table tr td svg,
-.toolbar[dark] table tr td svg,
-.controls[dark] table tr td svg {
-  fill: #e4e4e4;
 }
 
 .controls #socket svg {display: none}
@@ -89,61 +87,6 @@ body {
 .controls #socket[state='closed'] .closed {display: inline}
 .controls #socket[state='loading'] .loading {display: inline}
 
-.footer {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 13;
-  height: 22px;
-  padding: 0 5px;
-  position: fixed;
-  font-size: 13px;
-  line-height: 22px;
-  pointer-events: none;
-  font-family: monospace;
-  background: transparent;
-  color: rgba(255,255,255,0.5);
-  border-top: solid 1px rgba(255,255,255,0.05);
-}
-
-@media (prefers-color-scheme: dark) {
-  .login {
-    color: #ebebeb;
-    background-color: #333;
-  }
-  .login .form form input {
-    color: #ebebeb;
-    background-color: #4d4d4d;
-  }
-  .container .settings,
-  .container .settings table tr td p,
-  .container .settings table tr td label {
-    color: #ebebeb !important;
-    background-color: #333 !important;
-  }
-  .login .form,
-  .container .loader {
-    background-color: #000 !important;
-  }
-  .login .form,
-  .login .form .message {
-    color: #ebebeb;
-  }
-  .container .settings table .title div,
-  .container .settings table tr td textarea {
-    border-color: rgb(255 255 255 / 20%) !important;
-  }
-  .form,
-  .container .settings[state='show'] {
-    box-shadow: 0 0 15px 0 rgb(255 255 255 / 30%) !important;
-  }
-  .options table tr td svg,
-  .toolbar table tr td svg,
-  .controls table tr td svg {
-    fill: #e4e4e4 !important;
-  }
-}
-
-html[context="webapp"] .toolbar {
+html[context='webapp'] .toolbar {
   display: none;
 }

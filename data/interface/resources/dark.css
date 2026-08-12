@@ -1,0 +1,58 @@
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  .login {
+    color: #ebebeb;
+    background-color: #272727 !important;
+  }
+
+  .login .form form input {
+    color: #ebebeb;
+    background-color: #4d4d4d !important;
+  }
+
+  .container .chat,
+  .container .settings,
+  .container .chat .input button,
+  .container .settings table tr td p,
+  .container .settings table tr td label {
+    color: #ebebeb !important;
+    background-color: #272727 !important;
+  }
+
+  .login .form,
+  .container .loader,
+  .container .chat .list .item,
+  .container .chat .input input,
+  .container .settings table tr td input,
+  .container .settings table tr td textarea {
+    background-color: #161616 !important;
+  }
+
+  .login .form,
+  .login .form .message,
+  .container .chat .list .item,
+  .container .chat .list .item .body,
+  .container .chat .list .item .name {
+    color: #ebebeb !important;
+  }
+
+  .container .chat .input,
+  .container .chat .list .item,
+  .container .chat .input button,
+  .container .settings table .title div,
+  .container .settings table tr td input,
+  .container .settings table tr td textarea {
+    border-color: rgb(255 255 255 / 20%) !important;
+  }
+
+  .form {
+    box-shadow: 0 0 10px 0 rgb(255 255 255 / 15%) !important;
+  }
+
+  .container .chat .input button svg {
+    fill: #ebebeb !important;
+  }
+}
